@@ -1,12 +1,50 @@
-# Example table for a typical Book model.
-#
-# Book:
-#   - title: string
-#   - price: integer
-#   - author: string
-#   - summary: text
-#   - hardcover: boolean
-#
-# Follow the syntax exactly (colons and spacing are important).
-# Column type choices are: string, text, integer, and boolean.
-# You can have as many models as you want in this file.
+User:
+ - first_name: string
+ - last_name: string
+ - email: string
+ - password: string
+ - skintype_id: integer
+ - ethnicity: string
+ - city: string
+ - bday_month: integer
+ - bday_day: integer
+ - bday_year: integer
+ - age: integer
+
+Product:
+ - brand_id: integer
+ - product_type_id: integer
+ - description: string
+ - price: float
+ - skintype_id: integer
+ - review_count: integer
+ - rating: float
+ - link: string
+ - image: string
+
+ProductRating:
+ - user_id: integer
+ - product_id: integer
+ - currently_use: boolean
+ - works: boolean
+ - oily: boolean
+ - dry: boolean
+ - heavy: boolean
+ - breakout: boolean
+ - allergic: boolean
+ - treats: boolean
+ - review: string
+ - rating: float
+
+ProductType:
+ - category_id: integer
+ - name: string
+
+SkinType:
+ - name: string
+
+Category:
+ - name: string
+
+Brand:
+ - name: string

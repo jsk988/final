@@ -1,0 +1,4 @@
+<% product_id = params["id"]%>
+
+<% image_url = Product.read("id" => product_id).image%>
+<img src = <%= image_url%> alt="image">

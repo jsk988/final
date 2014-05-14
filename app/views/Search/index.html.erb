@@ -1,0 +1,16 @@
+<form action="/search/result" method="get">
+  <p>
+  	Search:
+	<input type="text" data-autocomplete="products/autocomplete_brand_name">
+	<input type="submit">
+  </p>
+</form>
+
+
+<% all_categories = Category.read%>
+
+<% all_categories.each do |category|%>
+	<li>
+	<%= link_to category["name"], "/search/#{category["id"]}"%>
+	</li>
+<%end%>

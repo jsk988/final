@@ -1,0 +1,8 @@
+<% category_id = params["id"]%>
+<% results = Product.where(:category_id => category_id) %>
+
+<% results.each do |result|%>
+	<% product_id = result.id%>
+	<%= link_to image_tag(result["image"], "width" => "50"),"/products/show/#{product_id}"%>
+	<br>
+<%end%>

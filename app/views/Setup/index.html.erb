@@ -1,0 +1,16 @@
+<form action="/setup" method="post">
+  <p>
+    <label>Skin type</label>
+    <% skintype_array = SkinType.all.map{|skintype| [skintype.name, skintype.id]} %>
+    <%= select_tag(:skintype,options_for_select(skintype_array))%>
+  <input type="hidden" name="id" value=<%= params["id"]%>>
+  <input type="submit">
+  </p>
+</form>
+
+<form action="/products/new" method="get">
+	<p>
+	<button type="submit">Add a product to vanity</button>
+	<input type="hidden" name="id" value=<%= params["id"]%>>
+	</p>
+</form>
