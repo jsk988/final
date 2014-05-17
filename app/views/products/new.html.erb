@@ -1,0 +1,26 @@
+	<h3> Add a product </h3>
+
+	<p> Product Information </p>
+
+	<form action="/setup" method="post">
+	  <p>
+	    <label>Category</label>
+	    <% category_array = Category.all.map{|category| [category.name, category.id]} %>
+	    <%= select_tag(:category,options_for_select(category_array))%>
+	  <input type="submit">
+	  </p>
+	</form>
+
+	<p>Product Diary </p>
+	<div class= "panel">
+		Currently using product: 
+		<div class="onoffswitch">
+			
+		    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+		    <label class="onoffswitch-label" for="myonoffswitch">
+		        <div class="onoffswitch-inner"></div>
+		        <div class="onoffswitch-switch"></div>
+		    </label>
+		</div>
+	</div>
+

@@ -1,0 +1,21 @@
+<p>
+  <%= link_to "Search", "/search" %> | <%= link_to "Favorites", "/favorites" %> | Vanity | <%= link_to "Profile","/profile"%>
+</p>
+
+<% user_id = 1%>
+<% products = ProductRating.read("user_id"=>user_id)%>
+<% current_products = products.read("currently_use"=>true)%>
+<% previous_products = products.read("currently_use"=>false)%>
+
+<p>Current products:</p>
+
+<% current_products.each do |current_product|%>
+	<% product = Product.find_by("id"=>current_product.product_id)%>
+	<%= link_to image_tag(product.image, "width" => "100"),"/vanity/show/#{product.id}"%>
+<% end%>
+
+<p>Previous products:</p>
+<% previous_products.each do |previous_product|%>
+	<% product = Product.find_by("id"=>previous_product.product_id)%>
+	<%= link_to image_tag(product.image, "width" => "100"),"/vanity/show/#{product.id}"%>
+<% end%>

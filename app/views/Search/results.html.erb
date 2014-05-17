@@ -1,8 +1,51 @@
-<% category_id = params["id"]%>
-<% results = Product.where(:category_id => category_id) %>
+<div class="container">
+  <div class="masthead">
+    <h3 class="text-muted">will.i.want</h3>
+    <ul class="nav nav-justified">
+      <li><%= link_to "Home","/"%></li>
+      <li class="active"><%= link_to "Search", "/search" %></li>
+      <li><%= link_to "Favorites", "/favorites" %></li>
+      <li><%= link_to "Vanity","/vanity"%></li>
+      <li><%= link_to "Profile","/profile"%></li>
+    </ul>
+  </div>
 
-<% results.each do |result|%>
-	<% product_id = result.id%>
-	<%= link_to image_tag(result["image"], "width" => "50"),"/products/show/#{product_id}"%>
-	<br>
-<%end%>
+	<% category_id = params["category_id"]%>
+	<% product_type_results = ProductType.where(:category_id => category_id) %>
+
+	<div class="row">
+
+		<% product_type_results.each do |result|%>
+			<div class="col-6 col-sm-6 col-lg-4">
+				<% results = Product.read("product_type_id"=>result.id)%>
+
+				<% results.each do |product|%>
+					
+					<%= link_to image_tag(product.image, "width" => "50"),"/products/show/#{product.id}"%>
+
+					<%= ProductType.find_by("id"=>product.product_type_id).name%>
+					<%= Brand.find_by("id"=>product.brand_id).name%>
+					
+					<% favorite_exists = Favorite.read("user_id" => 1).find_by("product_id" => product.id)%>
+				
+					<% if favorite_exists%>
+						<%= form_tag "/search/unlike", "method" => "post"%>
+							<%= hidden_field_tag "user_id", 1%>
+							<%= hidden_field_tag "product_id", product.id%>
+							<%= hidden_field_tag "category_id", category_id%>
+							<%= button_to "Unlike", "/search/unlike"%>
+						</form>
+					<% else%>
+						<%= form_tag "/search/like", "method" => "post"%>
+							<%= hidden_field_tag "user_id", 1%>
+							<%= hidden_field_tag "product_id", product.id%>
+							<%= hidden_field_tag "category_id", category_id%>
+							<%= button_to "Like", "/search/like"%>
+						</form>
+					<% end%>
+
+				<%end%>
+			</div>
+		<%end%>
+	</div>
+</div>

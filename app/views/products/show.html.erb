@@ -1,4 +1,23 @@
-<% product_id = params["id"]%>
-
+<% product_id = params["product_id"]%>
+<% product = Product.find_by("id" => product_id)%>
+<% product_type = ProductType.find_by("id"=>product.product_type_id)%>
 <% image_url = Product.read("id" => product_id).image%>
+<% category = Category.find_by("id"=> product_type.category_id).name%>
+<% brand = Brand.find_by("id"=>product.brand_id).name%>
+
+<p>
+  <%= link_to "Back to results", "/search/#{product_type.category_id}" %> | <%= link_to "Search", "/search" %> | <%= link_to "Favorites", "/favorites" %> | <%= link_to "Vanity","/vanity"%> | <%= link_to "Profile","/profile"%>
+</p>
+
+
 <img src = <%= image_url%> alt="image">
+<%= category%>
+<%= product_type.name%>
+<%= brand%>
+<%= product.description%>
+<%= product.price%>
+<%= product.review_count%>
+<%= product.rating%>
+<%= link_to "Product page", product.link%>
+
+

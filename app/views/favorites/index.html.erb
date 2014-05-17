@@ -1,0 +1,24 @@
+<p>
+  <%= link_to "Search", "/search" %> | Favorites | <%= link_to "Vanity","/vanity"%> | <%= link_to "Profile","/profile"%>
+</p>
+
+<% user_id = 1%>
+<% favorites = Favorite.read("user_id"=>user_id) %>
+
+<% favorites.each do |favorite|%>
+	<% product = Product.find_by("id"=>favorite.product_id)%>
+
+	<%= link_to image_tag(product.image, "width" => "50"),"/products/show/#{product.id}"%>
+
+	<%= ProductType.find_by("id"=>product.product_type_id).name%>
+	<%= Brand.find_by("id"=>product.brand_id).name%>
+	
+	<% favorite_exists = Favorite.read("user_id" => 1).find_by("product_id" => product.id)%>
+
+	<%= form_tag "/favorites/unlike", "method" => "post"%>
+		<%= hidden_field_tag "user_id", 1%>
+		<%= hidden_field_tag "product_id", product.id%>
+		<%= button_to "Unlike", "/favorites/unlike"%>
+	</form>
+
+<%end%>

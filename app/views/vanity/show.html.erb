@@ -1,0 +1,32 @@
+<p>
+  <%= link_to "Search", "/search" %> | <%= link_to "Favorites", "/favorites" %> | Vanity | <%= link_to "Profile","/profile"%>
+</p>
+
+<%= link_to "Back", "/vanity"%>
+
+<% product_id = params["id"]%>
+<% user_id = 1%>
+<% product = Product.find_by("id" => product_id)%>
+<% product_type = ProductType.find_by("id"=>product.product_type_id)%>
+<% image_url = Product.read("id" => product_id).image%>
+<% category = Category.find_by("id"=> product_type.category_id).name%>
+<% brand = Brand.find_by("id"=>product.brand_id).name%>
+<% product_rating = ProductRating.read("user_id"=>user_id).find_by("product_id"=>product_id)%>
+
+<p>
+<img src = <%= image_url%> alt="image">
+<%= category%>
+<%= product_type.name%>
+<%= brand%>
+<%= product.description%>
+<%= product_rating.currently_use%>
+<%= product_rating.works%>
+<%= product_rating.oily%>
+<%= product_rating.dry%>
+<%= product_rating.heavy%>
+<%= product_rating.breakout%>
+<%= product_rating.allergic%>
+<%= product_rating.treats%>
+<%= product_rating.review%>
+<%= product_rating.rating%>
+</p>
