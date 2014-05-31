@@ -1,51 +1,49 @@
-<div class="container">
-  <div class="masthead">
-    <h3 class="text-muted">will.i.want</h3>
-    <ul class="nav nav-justified">
-      <li><%= link_to "Home","/"%></li>
-      <li class="active"><%= link_to "Search", "/search" %></li>
-      <li><%= link_to "Favorites", "/favorites" %></li>
-      <li><%= link_to "Vanity","/vanity"%></li>
-      <li><%= link_to "Profile","/profile"%></li>
-    </ul>
-  </div>
 
-	<% category_id = params["category_id"]%>
-	<% product_type_results = ProductType.where(:category_id => category_id) %>
+<% category_id = params["category_id"]%>
+<% product_type_results = ProductType.where(:category_id => category_id) %>
+<% user_id = cookies["user_id"]%>
 
-	<div class="row">
+<p><h3><%=Category.find_by(:id=>category_id).name%> results</h3></p><br>
 
-		<% product_type_results.each do |result|%>
+<div class="row">
+
+	<% product_type_results.each do |result|%>
+		
+		<% results = Product.read("product_type_id"=>result.id)%>
+	
+		<% results.each do |product|%>
 			<div class="col-6 col-sm-6 col-lg-4">
-				<% results = Product.read("product_type_id"=>result.id)%>
+			  <div class="row resultsspace">
+				<div class="col-md-4">
+					<p>
+					<%= link_to image_tag(product.image,width:'80'),"/products/show/#{product.id}"%>
+					</p>
 
-				<% results.each do |product|%>
-					
-					<%= link_to image_tag(product.image, "width" => "50"),"/products/show/#{product.id}"%>
-
-					<%= ProductType.find_by("id"=>product.product_type_id).name%>
-					<%= Brand.find_by("id"=>product.brand_id).name%>
-					
-					<% favorite_exists = Favorite.read("user_id" => 1).find_by("product_id" => product.id)%>
+					<% favorite_exists = Favorite.read("user_id" => user_id).find_by("product_id" => product.id)%>
 				
 					<% if favorite_exists%>
 						<%= form_tag "/search/unlike", "method" => "post"%>
-							<%= hidden_field_tag "user_id", 1%>
 							<%= hidden_field_tag "product_id", product.id%>
 							<%= hidden_field_tag "category_id", category_id%>
-							<%= button_to "Unlike", "/search/unlike"%>
+							<%= submit_tag "Unlike", {class:'btn btn-default btn-sm'}%>
 						</form>
 					<% else%>
 						<%= form_tag "/search/like", "method" => "post"%>
-							<%= hidden_field_tag "user_id", 1%>
 							<%= hidden_field_tag "product_id", product.id%>
 							<%= hidden_field_tag "category_id", category_id%>
-							<%= button_to "Like", "/search/like"%>
+							<%= submit_tag "Like", {class:'btn btn-default btn-sm'}%>
 						</form>
 					<% end%>
-
-				<%end%>
-			</div>
+				</div>
+				<div class="col-md-8">
+					<p>
+					<%=link_to "#{ProductType.find_by("id"=>product.product_type_id).name}  from #{Brand.find_by("id"=>product.brand_id).name}", "/products/show/#{product.id}"%>
+					</p>
+					<p><%= SkinType.find_by("id"=>product.skintype_id).name%> skintype</p>
+					<p>Rating: <%= product.rating%>/5</p>
+				</div>	
+		      </div>
+		    </div>
 		<%end%>
-	</div>
+	<%end%>
 </div>

@@ -1,0 +1,25 @@
+<% user_id = cookies["user_id"]%>
+<% user = User.find_by("id"=>user_id)%>
+
+<h3>Edit your profile</h3>
+
+<div class="row" style="top-margin:15px">
+  <div class="col-md-5">
+    <%= form_tag "/profile", "method" => "patch" %>
+
+      <div class="form-group">
+        <%= label_tag "first_name", "First name:" %>
+        <%= text_field_tag "first_name", user["first_name"], "class" => "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag "last_name", "Last name:" %>
+        <%= text_field_tag "last_name", user["last_name"], "class" => "form-control" %>
+      </div>
+
+
+      <%= submit_tag "Save Changes", "class" => "btn btn-md btn-success" %> or <%= link_to "Cancel", "/profile" %>
+
+    </form>
+  </div>
+</div>

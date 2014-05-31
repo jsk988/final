@@ -1,0 +1,98 @@
+<% user_id = cookies["user_id"]%>
+<% product = Product.find_by("id"=>params["product_id"])%>
+<% product_type = ProductType.find_by("id"=>product.product_type_id)%>
+<% category = Category.find_by("id"=>product_type.category_id)%>
+<% brand = Brand.find_by("id"=>product.brand_id)%>
+<% rating = ProductRating.read("product_id"=>params["product_id"]).find_by("user_id"=>user_id)%>
+
+<h3> My Review <small> added <%= rating.created_at%></small></h3>
+
+<div class="row">
+	<div class="col-xs-8">
+		<div class="row">
+			<div class="col-xs-2">
+				<img src = <%= product.image%> width="80" alt="image">
+			</div>
+			<div class="col-xs-6">
+				<h5>
+					<%=category.name%><br>
+					<%=product_type.name%> from  <%=brand.name%><br>
+					<%=product.description%>
+				</h5>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-8">
+		<div class="row">
+			<div class="col-xs-5">
+				<h5>
+				Are you currently using this product? <br><br>
+				Overall, did the product work? <br><br>
+				Did it make your skin feel oily?<br><br>
+				Did it make your skin feel dry?<br><br>
+				Did it feel heavy?<br><br>
+				Did you breakout?<br><br>
+				Were you allergic?
+				</h5>
+			</div>
+			<div clss="col-xs-2">
+				<h5>
+				<% if rating.currently_use==true%>
+					Yes
+				<%else%>
+					No
+				<%end%>
+				<br><br>
+
+				<% if rating.works==true%>
+					Yes
+				<%else%>
+					No
+				<%end%>
+				<br><br>
+
+				<% if rating.oily==true%>
+					Yes
+				<%else%>
+					No
+				<%end%>
+				<br><br>
+
+				<% if rating.dry==true%>
+					Yes
+				<%else%>
+					No
+				<%end%>
+				<br><br>
+
+				<% if rating.heavy==true%>
+					Yes
+				<%else%>
+					No
+				<%end%>
+				<br><br>
+
+				<% if rating.breakout==true%>
+					Yes
+				<%else%>
+					No
+				<%end%>
+				<br><br>
+
+				<% if rating.allergic==true%>
+					Yes
+				<%else%>
+					No
+				<%end%>
+				</h5>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div style="top-margin:20px">
+	<h5><%=rating.review%> </h5>
+</div>

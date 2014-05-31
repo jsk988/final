@@ -1,0 +1,53 @@
+<% user = User.find_by("id" => cookies["user_id"])%>
+
+<% if user==nil%>
+	<div class="row">
+		<div class="image">
+
+		      <%= image_tag "background.jpg"%>
+		      <div class="ontop">
+		      
+		      	<h2>Find the skin you were meant to be in</h2>
+		      	<h5 style="color:DarkGray">* required fields</h5>
+				<div class="row">
+				  <div class="col-md-5">
+
+				    <p style="color:Red;"><%= @message %></p>
+
+				    <%= form_tag "/signup", "method" => "post"  %>
+
+				      <div class="form-group">
+				        <%= label_tag "username", "Choose a username*:" %>
+				        <%= text_field_tag "username", "", "class" => "form-control" %>
+				      </div>
+
+				      <div class="form-group">
+				        <%= label_tag "password", "Password*" %>
+				        <%= password_field_tag "password", "", "class" => "form-control" %>
+
+				      </div>
+
+				      <div class="form-group">
+				        <%= label_tag "first_name", "First name*" %>
+				        <%= text_field_tag "first_name", "", "class" => "form-control" %>
+				      </div>
+
+				      <div class="form-group">
+				        <%= label_tag "last_name", "Last name" %>
+				        <%= text_field_tag "last_name", "", "class" => "form-control" %>
+				      </div>
+
+				      <div class="form-group">
+				        <%= label_tag "email", "Email*" %>
+				        <%= text_field_tag "email", "", "class" => "form-control" %>
+				      </div>
+
+				      <%= submit_tag "Add Account", "class" => "btn btn-lg btn-success" %> or <%= link_to "Sign In", "/login" %>
+
+				    </form>
+				</div>
+	</div>
+		      </div>
+		</div>
+	</div>
+<%end%>

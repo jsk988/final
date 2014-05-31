@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514220646) do
+ActiveRecord::Schema.define(version: 20140531025614) do
 
   create_table "brands", force: true do |t|
     t.string "name"
@@ -27,18 +27,19 @@ ActiveRecord::Schema.define(version: 20140514220646) do
   end
 
   create_table "product_ratings", force: true do |t|
-    t.integer "user_id"
-    t.integer "product_id"
-    t.boolean "currently_use", default: false
-    t.boolean "works",         default: false
-    t.boolean "oily",          default: false
-    t.boolean "dry",           default: false
-    t.boolean "heavy",         default: false
-    t.boolean "breakout",      default: false
-    t.boolean "allergic",      default: false
-    t.boolean "treats",        default: false
-    t.string  "review"
-    t.float   "rating"
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.boolean  "currently_use", default: false
+    t.boolean  "works",         default: false
+    t.boolean  "oily",          default: false
+    t.boolean  "dry",           default: false
+    t.boolean  "heavy",         default: false
+    t.boolean  "breakout",      default: false
+    t.boolean  "allergic",      default: false
+    t.boolean  "treats",        default: false
+    t.string   "review"
+    t.float    "rating"
+    t.datetime "created_at"
   end
 
   create_table "product_types", force: true do |t|
@@ -47,15 +48,17 @@ ActiveRecord::Schema.define(version: 20140514220646) do
   end
 
   create_table "products", force: true do |t|
-    t.integer "brand_id"
-    t.integer "product_type_id"
-    t.string  "description"
-    t.float   "price"
-    t.integer "skintype_id"
-    t.integer "review_count"
-    t.float   "rating"
-    t.string  "link"
-    t.string  "image"
+    t.integer  "brand_id"
+    t.integer  "product_type_id"
+    t.string   "description"
+    t.float    "price"
+    t.integer  "skintype_id"
+    t.integer  "review_count"
+    t.float    "rating"
+    t.string   "link"
+    t.string   "image"
+    t.datetime "created_at"
+    t.string   "name"
   end
 
   create_table "skin_types", force: true do |t|
@@ -63,17 +66,19 @@ ActiveRecord::Schema.define(version: 20140514220646) do
   end
 
   create_table "users", force: true do |t|
-    t.string  "first_name"
-    t.string  "last_name"
-    t.string  "email"
-    t.string  "password"
-    t.integer "skintype_id"
-    t.string  "ethnicity"
-    t.string  "city"
-    t.integer "bday_month"
-    t.integer "bday_day"
-    t.integer "bday_year"
-    t.integer "age"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "password"
+    t.integer  "skintype_id"
+    t.string   "ethnicity"
+    t.string   "city"
+    t.integer  "bday_month"
+    t.integer  "bday_day"
+    t.integer  "bday_year"
+    t.integer  "age"
+    t.string   "username"
+    t.datetime "created_at"
   end
 
 end

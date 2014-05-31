@@ -1,21 +1,72 @@
-<p>
-  <%= link_to "Search", "/search" %> | <%= link_to "Favorites", "/favorites" %> | Vanity | <%= link_to "Profile","/profile"%>
-</p>
-
-<% user_id = 1%>
+<% user_id = cookies["user_id"]%>
 <% products = ProductRating.read("user_id"=>user_id)%>
 <% current_products = products.read("currently_use"=>true)%>
 <% previous_products = products.read("currently_use"=>false)%>
 
-<p>Current products:</p>
 
-<% current_products.each do |current_product|%>
-	<% product = Product.find_by("id"=>current_product.product_id)%>
-	<%= link_to image_tag(product.image, "width" => "100"),"/vanity/show/#{product.id}"%>
-<% end%>
+<div class="row" style="margin-top:30px">
+	<h4>Current products:</h4>
+	<% current_products.each do |current_product|%>
+		<div class="col-6 col-sm-6 col-lg-4">
+			  <div class="row">
+				<div class="col-md-4">
+					<% product = Product.find_by("id"=>current_product.product_id)%>
+					<%= link_to image_tag(product.image, "width" => "80"),"/vanity/show/#{product.id}"%>
+				</div>
+				<div class="col-md-8">
+					<p>
+					<%=link_to "#{ProductType.find_by("id"=>product.product_type_id).name}  from #{Brand.find_by("id"=>product.brand_id).name}", "/products/show/#{product.id}"%><br>
+						<%= link_to "My Review","/rating/#{product.id}"%>
+					</p>
+					<p><%= SkinType.find_by("id"=>product.skintype_id).name%> skintype</p>
+												
+					<% rating = ProductRating.find_by("product_id"=>current_product.product_id)%>
+					<div class="vanity">
+						Good:
+						<%= "Not oily, " if !rating.oily%>
+						<%= "Not dry, " if !rating.dry%>
+						<%= "Not heavy, " if !rating.heavy%>
+						<%= "No breakouts, " if !rating.breakout%>
+						<%= "No allergies, " if !rating.allergic%>
+						<%= "Treats, " if rating.treats%>
+					</div>
 
-<p>Previous products:</p>
-<% previous_products.each do |previous_product|%>
-	<% product = Product.find_by("id"=>previous_product.product_id)%>
-	<%= link_to image_tag(product.image, "width" => "100"),"/vanity/show/#{product.id}"%>
-<% end%>
+				</div>
+			  </div>
+		</div>
+	<% end%>
+</div>
+
+<div class="row" style="margin-top:50px">
+	<p><h4>Previous products:</h4></p>
+	<% previous_products.each do |previous_product|%>
+		<div class="col-6 col-sm-6 col-lg-4">
+			  <div class="row">
+				<div class="col-md-4">
+					<% product = Product.find_by("id"=>previous_product.product_id)%>
+					<%= link_to image_tag(product.image, "width" => "80"),"/vanity/show/#{product.id}"%> 
+				</div>
+				<div class="col-md-8">
+					<p>
+					<%=link_to "#{ProductType.find_by("id"=>product.product_type_id).name}  from #{Brand.find_by("id"=>product.brand_id).name}", "/products/show/#{product.id}"%><br>
+						<%= link_to "My Review","/rating/#{product.id}"%>
+					</p>
+					<p><%= SkinType.find_by("id"=>product.skintype_id).name%> skintype</p>
+					<p>Rating: <%= product.rating%>/5</p>
+
+					<% rating = ProductRating.find_by("product_id"=>previous_product.product_id)%>
+
+					<div class="vanity">
+						Good:
+						<%= "Not oily, " if !rating.oily%>
+						<%= "Not dry, " if !rating.dry%>
+						<%= "Not heavy, " if !rating.heavy%>
+						<%= "No breakouts, " if !rating.breakout%>
+						<%= "No allergies, " if !rating.allergic%>
+						<%= "Treats, " if rating.treats%>
+					</div>
+				</div>
+			  </div>
+		</div>
+	<% end%>
+</div>

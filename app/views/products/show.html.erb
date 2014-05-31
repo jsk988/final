@@ -1,3 +1,4 @@
+<% user_id = cookies["user_id"]%>
 <% product_id = params["product_id"]%>
 <% product = Product.find_by("id" => product_id)%>
 <% product_type = ProductType.find_by("id"=>product.product_type_id)%>
@@ -5,19 +6,228 @@
 <% category = Category.find_by("id"=> product_type.category_id).name%>
 <% brand = Brand.find_by("id"=>product.brand_id).name%>
 
-<p>
-  <%= link_to "Back to results", "/search/#{product_type.category_id}" %> | <%= link_to "Search", "/search" %> | <%= link_to "Favorites", "/favorites" %> | <%= link_to "Vanity","/vanity"%> | <%= link_to "Profile","/profile"%>
-</p>
+
+<div class="row topspace">
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-4">
+		<img src = <%= image_url%> width="200" alt="image">
+		
+	  </div>
 
 
-<img src = <%= image_url%> alt="image">
-<%= category%>
-<%= product_type.name%>
-<%= brand%>
-<%= product.description%>
-<%= product.price%>
-<%= product.review_count%>
-<%= product.rating%>
-<%= link_to "Product page", product.link%>
+	  <div class="col-md-8">
 
+	  	<div class="row space">
+	  		<div class="col-md-7">
+	  			<h3 style="color:DarkGray"><%= brand%></h3>
+	  		</div>
+	  		<div class="col-md-5">
+	  			
+	  			
+	  			<% favorite_exists = Favorite.read("user_id" => user_id).find_by("product_id" => product.id)%>
+				
+				<% if favorite_exists%>
+					<%= form_tag "/products/unlike", "method" => "post"%>
+						<%= hidden_field_tag "product_id", product.id%>
+						<%= submit_tag "Unlike", {class:'btn btn-default btn-sm'}%>
+					</form>
+				<% else%>
+					<%= form_tag "/products/like", "method" => "post"%>
+						<%= hidden_field_tag "product_id", product.id%>
+						<%= submit_tag "Like", {class:'btn btn-default btn-sm'}%>
+					</form>
+				<% end%>
+				<div data-toggle="modal" data-target="#myModal">
+					<%= button_tag "Add Review", {class:'btn btn-default btn-sm'}%>
+				</div>				
+	  		</div>
+	  	</div>
+	  	<div class="row">
+	  		<div class="col-md-12">
+		  		<p><h3 style="color:GoldenRod"><em>$<%= product.price.round%></em><small> at <%= link_to "Sephora", product.link%></small></h3></p>
+			<p><h4><%= product.rating%>/5 <small><%= product.review_count%> reviews</small></h4>
 
+			Category: <%= category%><br>
+			Type: <%= product_type.name%><br><br>
+			
+			<p><strong>Description: </strong><br>
+			<%= product.description%>
+			</p>
+	  		</div>
+	  	</div>
+
+			
+	  </div>
+	</div>
+  </div>
+</div>
+  <h4> Reviews</h4>
+  <% ratings = ProductRating.where("product_id"=>product_id)%>
+  
+  <% ratings.each do |review|%>
+  	<div class="row">
+  		<div class="col-md-2">
+  			<% user = User.find_by("id"=>review.user_id)%>
+  			<strong><%= user.first_name%> <%= user.last_name%></strong>
+  			<h6><strong>Skin type: </strong> <%= SkinType.find_by(:id=>user.skintype_id).name%><h6>
+  			<h6><strong>Location: </strong> <%= user.city%><h6>
+  			<h6><strong>Age: </strong> <%= user.age%><h6>
+
+  		</div>
+  		<div class="col-md-8">
+  			<% userrating = ProductRating.read(:product_id=>product_id).find_by(:user_id=>user.id)%>
+  			<strong><%= userrating.rating%>/5</strong><br>
+  			<%= review.review%>
+  		</div>
+  	</div>
+  <% end%>
+
+  <!-- Modal -->
+
+<%= form_tag "/rating" do %>
+	<%= hidden_field_tag "product_id", product.id%>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Add Review</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row", style="margin-bottom: 10px">
+				<div class="col-xs-12">
+					<div class="col-md-8">
+						<h5> Are you currently using this product? </h5>
+					</div>
+					<div class="cold-md-4">
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-default">
+							    <input type="radio" name="use" value="yes"> Yes
+						  </label>
+						  <label class="btn btn-default">
+						    	<input type="radio" name="use" value="no"> No
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row", style="margin-bottom: 10px">
+				<div class="col-xs-12">
+					<div class="col-md-8">
+						<h5> Overall, did the product work? </h5>
+					</div>
+					<div class="cold-md-4">
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-default">
+							    <input type="radio" name="works" value="yes"> Yes
+						  </label>
+						  <label class="btn btn-default">
+						    	<input type="radio" name="works" value="no"> No
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row", style="margin-bottom: 10px">
+				<div class="col-xs-12">
+					<div class="col-md-8">
+						<h5> Did it make your skin feel oily? </h5>
+					</div>
+					<div class="cold-md-4">
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-default">
+							    <input type="radio" name="oily" value="yes"> Yes
+						  </label>
+						  <label class="btn btn-default">
+						    	<input type="radio" name="oily" value="no"> No
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row", style="margin-bottom: 10px">
+				<div class="col-xs-12">
+					<div class="col-md-8">
+						<h5> Did it make your skin feel dry? </h5>
+					</div>
+					<div class="cold-md-4">
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-default">
+							    <input type="radio" name="dry" value="yes"> Yes
+						  </label>
+						  <label class="btn btn-default">
+						    	<input type="radio" name="dry" value="no"> No
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row", style="margin-bottom: 10px">
+				<div class="col-xs-12">
+					<div class="col-md-8">
+						<h5> Did it feel heavy? </h5>
+					</div>
+					<div class="cold-md-4">
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-default">
+							    <input type="radio" name="heavy" value="yes"> Yes
+						  </label>
+						  <label class="btn btn-default">
+						    	<input type="radio" name="heavy" value="no"> No
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row", style="margin-bottom: 10px">
+				<div class="col-xs-12">
+					<div class="col-md-8">
+						<h5> Did you breakout? </h5>
+					</div>
+					<div class="cold-md-4">
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-default">
+							    <input type="radio" name="breakout" value="yes"> Yes
+						  </label>
+						  <label class="btn btn-default">
+						    	<input type="radio" name="breakout" value="no"> No
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row", style="margin-bottom: 10px">
+				<div class="col-xs-12">
+					<div class="col-md-8">
+						<h5> Were you allergic? </h5>
+					</div>
+					<div class="cold-md-4">
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-default">
+							    <input type="radio" name="allergic" value="yes"> Yes
+						  </label>
+						  <label class="btn btn-default">
+						    	<input type="radio" name="allergic" value="no"> No
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+	      </div>
+	      <%= text_area_tag :content, "", "class" => "form-control", "placeholder" => "Share your feelings about this product", "rows" => 4 %>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <%= submit_tag "Add Review", "class" => "btn btn-md btn-primary" %>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<%end%>

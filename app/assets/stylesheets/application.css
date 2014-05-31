@@ -11,3 +11,19 @@
  *= require_self
  *= require_tree .
  */
+
+.resultsspace { margin-bottom: 50px; }
+.topspace { margin-top: 50px; }
+.vanity { font-style:italic; font-size:12px; color:DimGray;}
+
+.image { 
+   position: relative; 
+   width: 100%; /* for IE 6 */
+}
+
+.ontop {
+	position: absolute; 
+   top: 20px; 
+   left: 0; 
+   width: 100%; 
+}

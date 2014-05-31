@@ -1,24 +1,37 @@
-<p>
-  <%= link_to "Search", "/search" %> | Favorites | <%= link_to "Vanity","/vanity"%> | <%= link_to "Profile","/profile"%>
-</p>
 
-<% user_id = 1%>
+<% user_id = cookies["user_id"]%>
 <% favorites = Favorite.read("user_id"=>user_id) %>
 
-<% favorites.each do |favorite|%>
+<p><h3>My favorites:</h3></p><br>	
+
+<div class="row">
+	<% favorites.each do |favorite|%>
 	<% product = Product.find_by("id"=>favorite.product_id)%>
+		<% if product!=nil%>
+		<div class="col-6 col-sm-6 col-lg-4">
+			  <div class="row">
+				<div class="col-md-4">
 
-	<%= link_to image_tag(product.image, "width" => "50"),"/products/show/#{product.id}"%>
-
-	<%= ProductType.find_by("id"=>product.product_type_id).name%>
-	<%= Brand.find_by("id"=>product.brand_id).name%>
-	
-	<% favorite_exists = Favorite.read("user_id" => 1).find_by("product_id" => product.id)%>
-
-	<%= form_tag "/favorites/unlike", "method" => "post"%>
-		<%= hidden_field_tag "user_id", 1%>
-		<%= hidden_field_tag "product_id", product.id%>
-		<%= button_to "Unlike", "/favorites/unlike"%>
-	</form>
-
-<%end%>
+					<%= link_to image_tag(product.image, "width" => "80"),"/products/show/#{product.id}"%>
+					<% favorite_exists = Favorite.read("user_id" => user_id).find_by("product_id" => product.id)%>
+					<%= form_tag "/favorites/unlike", "method" => "post"%>
+						<%= hidden_field_tag "product_id", product.id%>
+						<%= button_to "Unlike", "/favorites/unlike",{class:'btn btn-default'}%>
+					</form>
+				</div>
+				<div class="col-md-8">
+					<p>
+					<%=link_to "#{ProductType.find_by("id"=>product.product_type_id).name}  from #{Brand.find_by("id"=>product.brand_id).name}", "/products/show/#{product.id}"%>
+					</p>
+					<p><%= SkinType.find_by("id"=>product.skintype_id).name%> skintype</p>
+					<p>Rating: <%= product.rating%>/5</p>
+				</div>
+			  </div>		
+		</div>	
+		<%else%>
+			<div class="row">
+			<h4> You have not added any favorites </h4>
+			</div>
+		<%end%>  	
+	<%end%>
+</div>	

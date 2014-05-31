@@ -1,38 +1,14 @@
-<div class="container">
-  <div class="masthead">
-    <h3 class="text-muted">will.i.want</h3>
-    <ul class="nav nav-justified">
-      <li><%= link_to "Home","/"%></li>
-      <li class="active"><%= link_to "Search", "/search" %></li>
-      <li><%= link_to "Favorites", "/favorites" %></li>
-      <li><%= link_to "Vanity","/vanity"%></li>
-      <li><%= link_to "Profile","/profile"%></li>
-    </ul>
-  </div>
 
+<% all_categories = Category.read%>
 
-
-    <form action="/search/result" method="get">
-      <p>
-      	Search:
-    	<input type="text" name="query">
-    	<input type="submit">
-      </p>
-    </form>
-
-
-    <% all_categories = Category.read%>
-
-    <div class="row">
-    <% all_categories.each do |category|%>
-      
-        <div class="col-6 col-sm-6 col-lg-4">
-
-          <h4><%= link_to category["name"], "/search/#{category["id"]}"%></h4>
-         
-        </div>
-       
-      <%end%>
-      </div> 
-</div>
+<div class="row topspace">
+<% all_categories.each do |category|%>
   
+    <div class="col-6 col-sm-6 col-lg-4">
+
+      <h4><%= link_to category["name"], "/search/#{category["id"]}"%></h4>
+     
+    </div>
+   
+  <%end%>
+</div> 

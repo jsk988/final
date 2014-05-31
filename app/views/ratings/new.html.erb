@@ -1,0 +1,115 @@
+<h1>Add A Product</h1>
+
+<%= form_tag "/reviews" do %>
+
+  <div class="form-group">
+
+	<h3> Product </h3>
+	      
+	<div class="row">
+		
+	</div>
+
+	<h3> Review </h3>
+	<div class="row", style="margin-bottom: 10px">
+		<div class="col-xs-5">
+			<div class="col-md-8">
+				<h5> Are you currently using this product? </h5>
+			</div>
+			<div class="cold-md-4">
+				<div data-toggle="buttons-radio">
+				  <%= label_tag "oily", "Yes", {class:'btn btn-default'}%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row", style="margin-bottom: 10px">
+		<div class="col-xs-5">
+			<div class="col-md-8">
+				<h5> Overall, did the product work? </h5>
+			</div>
+			<div class="cold-md-4">
+				<div data-toggle="buttons-radio">
+				  <%= label_tag "oily", "Yes", {class:'btn btn-default'}%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row", style="margin-bottom: 10px">
+		<div class="col-xs-5">
+			<div class="col-md-8">
+				<h5> Did it make your skin feel oily? </h5>
+			</div>
+			<div class="cold-md-4">
+				<div data-toggle="buttons-radio">
+				  <%= label_tag "oily", "Yes", {class:'btn btn-default'}%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row", style="margin-bottom: 10px">
+		<div class="col-xs-5">
+			<div class="col-md-8">
+				<h5> Did it make your skin feel dry? </h5>
+			</div>
+			<div class="cold-md-4">
+				<div data-toggle="buttons-radio">
+				  <%= label_tag "oily", "Yes", {class:'btn btn-default'}%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row", style="margin-bottom: 10px">
+		<div class="col-xs-5">
+			<div class="col-md-8">
+				<h5> Did it feel heavy? </h5>
+			</div>
+			<div class="cold-md-4">
+				<div data-toggle="buttons-radio">
+				  <%= label_tag "oily", "Yes", {class:'btn btn-default'}%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row", style="margin-bottom: 10px">
+		<div class="col-xs-5">
+			<div class="col-md-8">
+				<h5> Did you breakout? </h5>
+			</div>
+			<div class="cold-md-4">
+				<div data-toggle="buttons-radio">
+				  <%= label_tag "oily", "Yes", {class:'btn btn-default'}%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row", style="margin-bottom: 20px">
+		<div class="col-xs-5">
+			<div class="col-md-8">
+				<h5> Were you allergic? </h5>
+			</div>
+			<div class="cold-md-4">
+				<div data-toggle="buttons-radio">
+				  <%= label_tag "oily", "Yes", {class:'btn btn-default'}%>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">
+			<%= text_area_tag :content, "", "class" => "form-control", "placeholder" => "Tell the world about your experience", "rows" => 4 %>
+		</div>
+	</div>
+</div>
+
+  <%= submit_tag "Add Review", "class" => "btn btn-md btn-primary" %>
+<% end %>
+
+
