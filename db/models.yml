@@ -16,14 +16,14 @@ User:
 Product:
  - brand_id: integer
  - product_type_id: integer
- - name: string
- - description: string
+ - name: text
+ - description: text
  - price: float
  - skintype_id: integer
  - review_count: integer
  - rating: float
- - link: string
- - image: string
+ - link: text
+ - image: text
  - created_at: datetime
 
 ProductRating:
