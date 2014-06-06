@@ -6,30 +6,28 @@
 
 <div class="row">
 	<% favorites.each do |favorite|%>
-	<% product = Product.find_by("id"=>favorite.product_id)%>
+	<% product = Product.read("id"=>favorite.product_id)%>
 		<% if product!=nil%>
-		<div class="col-6 col-sm-6 col-lg-4">
-			  <div class="row">
-				<div class="col-md-4">
+			<div class="col-6 col-sm-6 col-lg-4">
+				  <div class="row">
+					<div class="col-md-4">
 
-					<%= link_to image_tag(product.image, "width" => "80"),"/products/show/#{product.id}"%>
-					<% favorite_exists = Favorite.read("user_id" => user_id).find_by("product_id" => product.id)%>
-					<%= form_tag "/favorites/unlike", "method" => "post"%>
-						<%= hidden_field_tag "product_id", product.id%>
-						<%= button_to "Unlike", "/favorites/unlike",{class:'btn btn-default'}%>
-					</form>
-				</div>
-				<div class="col-md-8">
-					<p>
-					<%=link_to "#{ProductType.find_by("id"=>product.product_type_id).name}  from #{Brand.find_by("id"=>product.brand_id).name}", "/products/show/#{product.id}"%>
-					</p>
-					<p><%= SkinType.find_by("id"=>product.skintype_id).name%> skintype</p>
-					<p>Rating: <%= product.rating%>/5</p>
-				</div>
-			  </div>		
-		</div>	
-		<%else%>
-			<h4> You have not added any favorites </h4>
-		<%end%>  	
+						<%= link_to image_tag(product.image, "width" => "80"),"/products/show/#{product.id}"%>
+						<% favorite_exists = Favorite.read("user_id" => user_id).find_by("product_id" => product.id)%>
+						<%= form_tag "/favorites/unlike", "method" => "post"%>
+							<%= hidden_field_tag "product_id", product.id%>
+							<%= button_to "Unlike", "/favorites/unlike",{class:'btn btn-default'}%>
+						</form>
+					</div>
+					<div class="col-md-8">
+						<p>
+						<%=link_to "#{ProductType.find_by("id"=>product.product_type_id).name}  from #{Brand.find_by("id"=>product.brand_id).name}", "/products/show/#{product.id}"%>
+						</p>
+						<p><%= SkinType.find_by("id"=>product.skintype_id).name%> skintype</p>
+						<p>Rating: <%= product.rating%>/5</p>
+					</div>
+				  </div>		
+			</div>	
+		<%end%> 	
 	<%end%>
 </div>	

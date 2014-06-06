@@ -15,6 +15,7 @@ Final::Application.routes.draw do
   post "/favorites/unlike" => 'favorites#unlike'
 
   get "/vanity" => 'vanity#index'
+  post "/vanity/remove" => 'vanity#remove'
   get "/vanity/show/:id" => 'vanity#show'
 
   get "/signup" => 'user#new'

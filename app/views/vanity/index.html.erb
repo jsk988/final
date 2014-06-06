@@ -12,6 +12,10 @@
 				<div class="col-md-4">
 					<% product = Product.find_by("id"=>current_product.product_id)%>
 					<%= link_to image_tag(product.image, "width" => "80"),"/vanity/show/#{product.id}"%>
+					<%= form_tag "/vanity/remove", "method" => "post"%>
+						<%= hidden_field_tag "product_rating_id", current_product.id%>
+						<%= submit_tag "Finished", {class:'btn btn-default btn-sm'}%>
+					</form>
 				</div>
 				<div class="col-md-8">
 					<p>

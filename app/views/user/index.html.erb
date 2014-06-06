@@ -15,19 +15,10 @@
 	</div>	
 </div>
 
-<div class="row">
-	<div class="col-md-6">
-		<div class="row">
-			<div class="cols-md-2">
-				Name: 
-				Email: 
-				Skintype: 
-			</div>
-			<div class="cols-md-4">
-				<%= user["first_name"]%> <%= user["last_name"]%>
-				<%= user["email"]%>
-				<%= skintype["name"]%>
-			</div>
-		</div>
-	</div>
-</div>
+
+<strong>Name:</strong> <%= user["first_name"]%> <%= user["last_name"]%> <br>
+<strong>Email:</strong> <%= user["email"]%> <br>
+<strong>Skintype:</strong> <%= skintype["name"]%> <br>
+<strong>Ethnicity:</strong> <%= user["ethnicity"]%> <br>
+<strong>City:</strong> <%= user["city"]%> <br>
+<strong>Birthday:</strong> <%= user["bday_month"]%>/<%= user["bday_day"]%>/<%= user["bday_year"]%> <br>
