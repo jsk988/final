@@ -77,7 +77,6 @@
   		</div>
   		<div class="col-md-8">
   			<% userrating = ProductRating.read(:product_id=>product_id).find_by(:user_id=>user.id)%>
-  			<strong><%= userrating.rating%>/5</strong><br>
   			<%= review.review%>
   		</div>
   	</div>

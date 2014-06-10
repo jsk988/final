@@ -17,6 +17,20 @@
         <%= text_field_tag "last_name", user["last_name"], "class" => "form-control" %>
       </div>
 
+      <div class="form-group">
+        <%= label_tag "email", "Email:" %>
+        <%= text_field_tag "email", user["email"], "class" => "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag "skintype", "Skingtype:" %>
+        <%= select_tag "skintype", options_for_select({"Dry"=>SkinType.find_by("name"=>"Dry").id,"Oily"=>SkinType.find_by("name"=>"Oily").id, "Combination"=>SkinType.find_by("name"=>"Combination").id,"Normal"=>SkinType.find_by("name"=>"Normal").id}) %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag "city", "City:" %>
+        <%= text_field_tag "city", user["city"], "class" => "form-control" %>
+      </div>
 
       <%= submit_tag "Save Changes", "class" => "btn btn-md btn-success" %> or <%= link_to "Cancel", "/profile" %>
 

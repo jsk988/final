@@ -1,7 +1,11 @@
 class UserController < ApplicationController
 	def updateprofile
 		user = User.find_by("id"=>cookies["user_id"])
-		user.update("first_name"=>params["first_name"],"last_name"=>params["last_name"])
+		user.update("first_name"=>params["first_name"],
+					"last_name"=>params["last_name"],
+					"email"=>params["email"],
+					"city"=>params["city"],
+					"skintype_id"=>params["skintype"])
 		
 		redirect_to "/profile"
 	end

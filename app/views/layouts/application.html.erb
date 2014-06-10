@@ -13,6 +13,7 @@
 <body>
 <% user = User.find_by("id" => cookies["user_id"])%>
 
+
   <div class="container">
     <div class="masthead">
         <div class="row">
@@ -34,7 +35,6 @@
           </div>
         </div>
         <ul class="nav nav-justified">
-          <li><%= link_to "Home","/"%></li>
           <li><%= link_to "Search", "/search" %></li>
           <li><%= link_to "Favorites", "/favorites" %></li>
           <li><%= link_to "Vanity","/vanity"%></li>

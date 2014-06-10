@@ -16,6 +16,6 @@ class SessionsController < ApplicationController
 
   	def logout
 	    cookies["user_id"] = nil
-	    redirect_to "/", :notice => "Thank you for visiting will.i.want"
+	    redirect_to "/"
   	end
 end
